@@ -1,0 +1,137 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pink Tulip — Bunga Tulip Pink Interaktif</title>
+  <style>
+    /* Reset */
+    html,body{height:100%;margin:0}
+    body{display:grid;place-items:center;background:linear-gradient(180deg,#f7f4ff 0%, #fff 60%);font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}.stage{
+  width:min(720px,95vw);
+  aspect-ratio:16/9;
+  display:grid;place-items:center;
+  padding:24px;
+}
+
+.card{
+  width:100%;height:100%;border-radius:18px;box-shadow:0 10px 30px rgba(20,18,40,0.12);background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.7));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+
+/* subtle floating background shapes */
+.bg-blob{position:absolute;filter:blur(28px);opacity:0.85}
+.blob1{width:420px;height:300px;background:radial-gradient(circle at 30% 30%, #ffd6e8 0%, #ffc0dd 30%, transparent 60%);left:-80px;top:-40px}
+.blob2{width:360px;height:260px;background:radial-gradient(circle at 70% 70%, #ffeef8 0%, #ffcfe4 30%, transparent 60%);right:-80px;bottom:-20px}
+
+/* SVG sizing */
+svg{width:60%;height:auto;max-width:520px;display:block}
+
+/* animations */
+.stem{transform-origin:50% 0%;animation:sway 3.6s ease-in-out infinite}
+@keyframes sway{
+  0%{transform:rotate(-2deg)}
+  50%{transform:rotate(2.5deg)}
+  100%{transform:rotate(-2deg)}
+}
+
+.petal{transform-origin:50% 65%;animation:bloom 3s ease-in-out infinite}
+.petal.left{animation-delay:0s}
+.petal.center{animation-delay:0.12s}
+.petal.right{animation-delay:0.22s}
+
+@keyframes bloom{
+  0%{transform:scale(0.98) translateY(2px)}
+  50%{transform:scale(1.03) translateY(-2px)}
+  100%{transform:scale(0.98) translateY(2px)}
+}
+
+/* small shimmer */
+.shine{opacity:0.18;mix-blend-mode:screen;animation:shimmer 4s linear infinite}
+@keyframes shimmer{0%{opacity:0.12}50%{opacity:0.28}100%{opacity:0.12}}
+
+/* caption */
+.caption{position:absolute;left:20px;bottom:16px;font-size:14px;color:#5b4a6b}
+
+/* responsive tweaks */
+@media (max-width:520px){
+  svg{width:86%}
+  .card{border-radius:14px}
+}
+
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="card" role="img" aria-label="Bunga tulip berwarna pink">
+      <div class="bg-blob blob1"></div>
+      <div class="bg-blob blob2"></div><!-- Tulip SVG: mudah diedit. Warna utamanya dikendalikan oleh gradien 'petalGradient'. -->
+  <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="false">
+    <defs>
+      <!-- gradient for petals (ubah warna di sini untuk gradasi) -->
+      <linearGradient id="petalGradient" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="#ff7fb1" />
+        <stop offset="55%" stop-color="#ff4d94" />
+        <stop offset="100%" stop-color="#ff2d86" />
+      </linearGradient>
+
+      <!-- subtle highlight -->
+      <linearGradient id="petalShine" x1="0" x2="1">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+
+      <!-- leaf gradient -->
+      <linearGradient id="leafGrad" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#8fd19b" />
+        <stop offset="100%" stop-color="#4fa86b" />
+      </linearGradient>
+
+      <!-- soft shadow -->
+      <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#403050" flood-opacity="0.14" />
+      </filter>
+    </defs>
+
+    <!-- Ground / reflection -->
+    <ellipse cx="180" cy="318" rx="74" ry="8" fill="#ffdff0" opacity="0.6"/>
+
+    <!-- Leaves (left and right) -->
+    <g transform="translate(0,12)">
+      <path d="M120 230 C86 232,70 198,110 170 C130 154,160 150,170 170 C175 182,160 206,142 224 C130 236,124 236,120 230Z" fill="url(#leafGrad)" filter="url(#softShadow)"/>
+      <path d="M240 230 C274 232,290 198,250 170 C230 154,200 150,190 170 C185 182,200 206,218 224 C230 236,236 236,240 230Z" fill="url(#leafGrad)" filter="url(#softShadow)"/>
+    </g>
+
+    <!-- Stem group: will sway -->
+    <g class="stem" transform="translate(0,0)">
+      <path d="M180 140 C178 160,176 198,178 224 C179 242,180 268,180 290" stroke="#2c7a4b" stroke-width="6" stroke-linecap="round" fill="none" />
+
+      <!-- calyx / sepals (the green base under petals) -->
+      <g transform="translate(0,0)">
+        <path d="M160 140 C150 150,150 170,170 178 C190 186,210 180,220 168 C230 156,230 142,210 136 C190 130,170 136,160 140Z" fill="#2f6b49" opacity="0.95" />
+      </g>
+
+      <!-- Petals group -->
+      <g transform="translate(0,-18)">
+        <!-- left petal -->
+        <path class="petal left" d="M180 80 C140 84,118 106,120 142 C124 180,150 198,180 186 C164 160,160 120,180 100Z" fill="url(#petalGradient)" stroke="#e24a85" stroke-opacity="0.22" stroke-width="1"/>
+
+        <!-- center petal -->
+        <path class="petal center" d="M180 68 C170 80,160 94,156 122 C152 150,174 176,198 170 C210 168,220 150,218 122 C214 90,200 74,180 68Z" fill="url(#petalGradient)" stroke="#e24a85" stroke-opacity="0.22" stroke-width="1"/>
+
+        <!-- right petal -->
+        <path class="petal right" d="M180 80 C220 84,242 106,240 142 C236 180,210 198,180 186 C196 160,200 120,180 100Z" fill="url(#petalGradient)" stroke="#e24a85" stroke-opacity="0.22" stroke-width="1"/>
+
+        <!-- petal highlight -->
+        <path d="M138 95 C152 86,172 80,180 82 C196 86,210 96,225 112" fill="none" stroke="url(#petalShine)" stroke-width="6" opacity="0.14" class="shine"/>
+      </g>
+    </g>
+
+  </svg>
+
+  <div class="caption">Bunga tulip pink — ubah gradasi di <code>petalGradient</code> untuk warna lain</div>
+</div>
+
+  </div>
+</body>
+</html>
